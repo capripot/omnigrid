@@ -995,7 +995,7 @@ var omniGrid = new Class({
 				columnObj.setStyle('width', pos-(Browser.ie ? 6 : 6 ));
 			}
 			
-		});
+		}, this);
 		
 		this.rePosDrag();		
 	},

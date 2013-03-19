@@ -3,16 +3,13 @@ omnigrid
 
 Enchanced table viewer written JS helped with [MooTools](http://mootools.net/).
 
-Mootools-Core and Drag module dependent.
-
-Originally developed by Marko Šantić from Omnisdata Ltd.
-
+[Mootools-Core](http://mootools.net/download/get/mootools-core-1.4.5-full-nocompat.js) and [Drag module](http://mootools.net/more/f7005197184c1ad698fa1b435a9aecc0) dependent.
 
 
 About
 -----
 
-The OmniGrid component is inspired by two similar components: FlexGrid jQuery and phatfusion:sortableTable and partly uses their source code. It was developed due to a lack of powerful DataGrid for Mootools 1.2 library. The author is Marko Šantić from Omnisdata company.
+The OmniGrid component is inspired by two similar components: FlexGrid jQuery and phatfusion:sortableTable and partly uses their source code. It was developed due to a lack of powerful DataGrid for Mootools library. The original author is Marko Šantić from Omnisdata company.
 
 Omnigrid - Advanced DataGrid for Mootools by Omnisdata Ltd is licensed under a MIT License.
 

@@ -21,7 +21,14 @@
 
 .omnigrid div.hDiv /* header div */
 {
-	background: #fafafa url(img/fhbg.gif) repeat-x bottom;
+	background: #f0f0f0;
+	background: -moz-linear-gradient(top,  #f9f9f9 0%, #f9f9f9 43%, #f1f2f4 44%, #ebecee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f0), color-stop(43%,#f9f9f9), color-stop(44%,#f1f2f4), color-stop(100%,#ebecee));
+	background: -webkit-linear-gradient(top,  #f9f9f9 0%,#f9f9f9 43%,#f1f2f4 44%,#ebecee 100%);
+	background: -o-linear-gradient(top,  #f9f9f9 0%,#f9f9f9 43%,#f1f2f4 44%,#ebecee 100%);
+	background: -ms-linear-gradient(top,  #f9f9f9 0%,#f9f9f9 43%,#f1f2f4 44%,#ebecee 100%);
+	background: linear-gradient(to bottom,  #f9f9f9 0%,#f9f9f9 43%,#f1f2f4 44%,#ebecee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#ebecee',GradientType=0 );
 	position: relative;
 	border: 1px solid #ccc;
 	border-bottom: 0px;
@@ -235,16 +242,18 @@
 
 .omnigrid div.hDiv div.DESC
 {
-	background: url(img/dn.png) no-repeat center top;
-	border-bottom: 1px solid orange !important;
+	background: url(img/ddn.png) no-repeat right 5px center;
 }	
 
 .omnigrid div.hDiv  div.ASC
 {
-	background: url(img/up.png) no-repeat center top;
-	border-bottom: 1px solid orange !important;
-}	
+	background: url(img/uup.png) no-repeat right 5px center;
+}
 
+.omnigrid div.hDiv div.th:hover
+{
+	border-bottom: 1px solid orange !important;
+}
 
 /* ************************************** */
 /* ************** Pagination ************ */
@@ -252,7 +261,14 @@
 
 .omnigrid div.pDiv
 {
-	background: url(img/wbg.gif) repeat-x 0 -1px;
+	background: #f0f0f0;
+	background: -moz-linear-gradient(top,  #f0f0f0 0%, #d7d7d7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f0), color-stop(100%,#d7d7d7));
+	background: -webkit-linear-gradient(top,  #f0f0f0 0%,#d7d7d7 100%);
+	background: -o-linear-gradient(top,  #f0f0f0 0%,#d7d7d7 100%);
+	background: -ms-linear-gradient(top,  #f0f0f0 0%,#d7d7d7 100%);
+	background: linear-gradient(to bottom,  #f0f0f0 0%,#d7d7d7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#d7d7d7',GradientType=0 );
 	border: 1px solid #ccc;
 	border-top: 0px;
 	overflow: hidden;

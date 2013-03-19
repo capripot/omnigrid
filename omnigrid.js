@@ -926,7 +926,7 @@ var omniGrid = new Class({
 			// hidden-1
 			var dragSt = cDrags[c];
 		
-			dragSt.setStyle('left', dragTempWidth+columnModel.width+(Browser.Engine.trident ? 1 : 1 )-scrollX);
+			dragSt.setStyle('left', dragTempWidth+columnModel.width+(Browser.ie ? 1 : 1 )-scrollX);
 			//console.log(dragTempWidth+columnModel.width+2);
 			
 			if (!columnModel.hidden)
@@ -954,7 +954,7 @@ var omniGrid = new Class({
 			if (c == colindex)
 			{
 				// nova vrijednost pomaknute kolone
-				var pos = dragSt.getStyle('left').toInt()+scrollX-this.sumWidth-(Browser.Engine.trident ? -1 : 1 ); // zato sto je u dragSt.left +2
+				var pos = dragSt.getStyle('left').toInt()+scrollX-this.sumWidth-(Browser.ie ? -1 : 1 ); // zato sto je u dragSt.left +2
 			}else if (!columnModel.hidden)			
 				this.sumWidth += columnModel.width;
 		}
@@ -968,7 +968,7 @@ var omniGrid = new Class({
 		this.sumWidth += pos;
 		//console.log(this.sumWidth);
 		
-		this.ulBody.setStyle('width', this.sumWidth+this.visibleColumns*(Browser.Engine.trident ? 1 : 1 ));
+		this.ulBody.setStyle('width', this.sumWidth+this.visibleColumns*(Browser.ie ? 1 : 1 ));
 		var hDivBox = this.container.getElement('div.hDivBox');
 		
 		hDivBox.setStyle('width', this.sumWidth+this.visibleColumns*2);
@@ -977,7 +977,7 @@ var omniGrid = new Class({
 		var columns = hDivBox.getElements('div.th');
 		var columnObj = columns[colindex];
 		
-		columnObj.setStyle('width', pos-(Browser.Engine.trident ? 6 : 6 ));
+		columnObj.setStyle('width', pos-(Browser.ie ? 6 : 6 ));
 
 		var visibleColumns = this.visibleColumns; // radi this. u each-u
 		
@@ -992,7 +992,7 @@ var omniGrid = new Class({
 			{
 				var columns = el.getElements('div.td');
 				var columnObj = columns[colindex];
-				columnObj.setStyle('width', pos-(Browser.Engine.trident ? 6 : 6 ));
+				columnObj.setStyle('width', pos-(Browser.ie ? 6 : 6 ));
 			}
 			
 		});
@@ -1026,30 +1026,15 @@ var omniGrid = new Class({
 		var colindex = evt.target.retrieve('column');
 		var columnModel = this.options.columnModel[colindex];
 		
+		//reset columns
+		this.container.getElements('.th').invoke('removeClass', 'ASC').invoke('removeClass', 'DESC');
+		
 		evt.target.removeClass(columnModel.sort);
 		columnModel.sort = (columnModel.sort == 'ASC') ? 'DESC' : 'ASC';
 		evt.target.addClass(columnModel.sort);
 
 		//hidden-1
 		this.sort(colindex);
-	},
-	
-	overHeaderColumn: function(evt){
-		if (this.dragging) return;
-		
-		var colindex = evt.target.retrieve('column');
-		var columnModel = this.options.columnModel[colindex];
-
-		evt.target.addClass(columnModel.sort);
-	},
-	
-	outHeaderColumn: function(evt){
-		if (this.dragging) return;
-		
-		var colindex = evt.target.retrieve('column');
-		var columnModel = this.options.columnModel[colindex];
-		
-		evt.target.removeClass(columnModel.sort);
 	},
 	
 	getBodyHeight: function(){
@@ -1212,7 +1197,7 @@ var omniGrid = new Class({
 		// ************************************************************************
 		// ************************* Common ***************************************
 		// ************************************************************************
-		var width = this.options.width - (Browser.Engine.trident ? 2 : 2 ); //-2 radi bordera
+		var width = this.options.width - (Browser.ie ? 2 : 2 ); //-2 radi bordera
 		var columnCount = this.options.columnModel ? this.options.columnModel.length : 0;
 		
 		// ************************************************************************
@@ -1228,16 +1213,16 @@ var omniGrid = new Class({
 		
 		if (this.options.buttons)
 		{
-			var tDiv = new Element('div');
-			tDiv.addClass('tDiv');
-			tDiv.setStyle('width', width); 
-			tDiv.setStyle('height', 25+(Browser.Engine.trident ? 2 : 0 ));// borderi u FF
-			this.container.appendChild(tDiv);
+			var tDiv = new Element('div')
+			.addClass('tDiv')
+			.setStyles({'width': width, 'height': 25+(Browser.ie ? 2 : 0 )}) // borderi u FF
+			.inject(this.container);
 			
 			var bt = this.options.buttons;
 			for (var i = 0; i < bt.length; i++) {
-				var fBt = new Element('div');
-				tDiv.appendChild(fBt);
+				var fBt = new Element('div')
+				inject(tDiv);
+				
 				if (bt[i].separator)
 				{
 					fBt.addClass('btnseparator');
@@ -1246,33 +1231,31 @@ var omniGrid = new Class({
 				
 				fBt.addClass('fbutton');
 				
-				var cBt = new Element('div');
-				cBt.addEvent('click', bt[i].onclick.bind(this, [bt[i].bclass, this])); 
-				cBt.addEvent('mouseover', function(){this.addClass('fbOver'); }); 
-				cBt.addEvent('mouseout', function(){this.removeClass('fbOver'); }); 
+				var cBt = new Element('div', {
+						click: bt[i].onclick.bind(this, [bt[i].bclass, this]), 
+						mouseover: function(){this.addClass('fbOver')},
+						mouseout: function(){this.removeClass('fbOver')}
+				}).inject(fBt); 
 				
-				fBt.appendChild(cBt);
-				
-				var spanBt = new Element('span');
-				spanBt.addClass(bt[i].bclass);
-				spanBt.setStyle('padding-left', 20 );
-				spanBt.set('html', bt[i].name);
-				cBt.appendChild(spanBt);
+				var spanBt = new Element('span')
+				.addClass(bt[i].bclass)
+				.setStyle('padding-left', 20 )
+				.set('html', bt[i].name)
+				.inject(cBt);
 			}
 		}
 		
 		// ************************************************************************
 		// ************************* Header ***************************************
 		// ************************************************************************
-		var hDiv = new Element('div');
-		hDiv.addClass('hDiv');
-		hDiv.setStyle('width', width ); // borderi u FF
-		this.container.appendChild(hDiv);
+		var hDiv = new Element('div', {
+			class: 'hDiv',
+			styles: {'width': width } // borderi u FF
+		}).inject(this.container);
 		
-		var hDivBox = new Element('div');
-		hDivBox.addClass('hDivBox');
-		
-		hDiv.appendChild(hDivBox);
+		var hDivBox = new Element('div')
+		.addClass('hDivBox')
+		.inject(hDiv);
 		
 		this.sumWidth = 0;
 		this.visibleColumns = 0; // razlikuje se od columnCount jer podaci za neke kolone su ocitani ali se ne prikazuju, npr. bitno kod li width
@@ -1291,14 +1274,12 @@ var omniGrid = new Class({
 			if (this.options.sortHeader)
 			{
 				div.addEvent('click', this.clickHeaderColumn.bind(this));
-				div.addEvent('mouseout', this.outHeaderColumn.bind(this));
-				div.addEvent('mouseover', this.overHeaderColumn.bind(this));
 			}
 			
 			div.store('column', c);
 			div.store('dataType', columnModel.dataType);
 			div.addClass('th');
-			div.setStyle('width', columnModel.width-(Browser.Engine.trident ? 6 : 6 ));
+			div.setStyle('width', columnModel.width-(Browser.ie ? 6 : 6 ));
 			hDivBox.appendChild(div);
 	
 			if (columnModel.hidden) 
@@ -1330,11 +1311,10 @@ var omniGrid = new Class({
 		
 		if (this.options.resizeColumns)
 		{
-			var cDrag = new Element('div');
-			cDrag.addClass('cDrag');
-			var toolbarHeight = this.options.buttons ? tDiv.getStyle('height').toInt() : 0; // toolbar
-			cDrag.setStyle('top', toolbarHeight);
-			this.container.appendChild(cDrag);
+			var cDrag = new Element('div')
+			.addClass('cDrag')
+			.setStyle('top', this.options.buttons ? tDiv.getStyle('height').toInt() : 0)
+			.inject(this.container);
 			
 			var dragTempWidth = 0;
 			for (var c = 0; c < columnCount; c++) {
@@ -1387,21 +1367,21 @@ var omniGrid = new Class({
 		bDiv.addEvent('scroll', this.onBodyScrollBind);
 		//alert(this.visibleColumns);
 		this.ulBody = new Element('ul');
-		this.ulBody.setStyle('width', this.sumWidth+this.visibleColumns*(Browser.Engine.trident ? 1 : 1 )); // da se ne vidi visak, ul je overflow hidden
+		this.ulBody.setStyle('width', this.sumWidth+this.visibleColumns*(Browser.ie ? 1 : 1 )); // da se ne vidi visak, ul je overflow hidden
 		bDiv.appendChild(this.ulBody);
 
 
 		if (this.options.pagination && !this.container.getElement('div.pDiv') )
 		{
-			var pDiv = new Element('div');
-			pDiv.addClass('pDiv');
-			pDiv.setStyle('width', width); 
-			pDiv.setStyle('height', 25);
-			this.container.appendChild(pDiv);
+			var pDiv = new Element('div')
+			.addClass('pDiv')
+			.setStyle('width', width)
+			.setStyle('height', 25)
+			.inject(this.container);
 			
-			var pDiv2 = new Element('div');
-			pDiv2.addClass('pDiv2');
-			pDiv.appendChild(pDiv2);
+			var pDiv2 = new Element('div')
+			.addClass('pDiv2')
+			.inject(pDiv);
 			
 			var h = '<div class="pGroup"><select class="rp" name="rp">';
 			
@@ -1550,7 +1530,7 @@ var omniGrid = new Class({
 		}else{
 			// Sorting...
 			this.elements.sort(el.compare);
-			this.elements.injectInside(this.ulBody);
+			this.elements.inject(this.ulBody);
 			
 			// Update selection array because indices has been changed
 			this.selected = new Array();

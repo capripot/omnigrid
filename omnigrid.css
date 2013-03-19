@@ -42,6 +42,11 @@
 	background: #fff;
 	overflow: auto;
 	position: relative;
+	-webkit-user-select: none; 
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .omnigrid div.hDiv .th, .omnigrid  div.bDiv .td  /* common cell properties*/

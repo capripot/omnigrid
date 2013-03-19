@@ -1383,7 +1383,7 @@ var omniGrid = new Class({
 			.addClass('pDiv2')
 			.inject(pDiv);
 			
-			var h = '<div class="pGroup"><select class="rp" name="rp">';
+			var h = '<div class="pGroup"><select class="rp input-mini" name="rp">';
 			
 			// *****
 			var optIdx;
@@ -1402,7 +1402,7 @@ var omniGrid = new Class({
 			h += '</select></div>';
 			
 			h += '<div class="btnseparator"></div><div class="pGroup"><div class="pFirst pButton"></div><div class="pPrev pButton"></div></div>';
-			h += '<div class="btnseparator"></div><div class="pGroup"><span class="pcontrol"><input class="cpage" type="text" value="1" size="4" style="text-align:center"/> / <span></span></span></div>';
+			h += '<div class="btnseparator"></div><div class="pGroup"><span class="pcontrol"><input class="cpage input-mini" type="text" value="1" size="4" style="text-align:center"/> / <span></span></span></div>';
 			h += '<div class="btnseparator"></div><div class="pGroup"><div class="pNext pButton"></div><div class="pLast pButton"></div></div>';
 			h += '<div class="btnseparator"></div><div class="pGroup"><div class="pReload pButton"></div></div>';
 			h += '<div class="btnseparator"></div><div class="pGroup"><span class="pPageStat"></div>';

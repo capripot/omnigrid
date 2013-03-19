@@ -1221,7 +1221,7 @@ var omniGrid = new Class({
 			var bt = this.options.buttons;
 			for (var i = 0; i < bt.length; i++) {
 				var fBt = new Element('div')
-				inject(tDiv);
+				.inject(tDiv);
 				
 				if (bt[i].separator)
 				{

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Omnigrid basic example</title>
+		<link rel="stylesheet" type="text/css" href="Bootstrap/bootstrap.css">
+		<link rel="stylesheet" media="screen" href="omnigrid.css" type="text/css" />
+		
+		<style>
+		.omnigrid div.pDiv span{
+			line-height: 10px;
+		}
+		.omnigrid div.pDiv select
+		{
+			padding: 1px;
+			height: 18px;
+		}
+		</style>
+		
+		<script type="text/javascript" src="mootools/mootools-core.js"></script>
+		<script type="text/javascript" src="mootools/mootools-more.js"></script>
+		<script type="text/javascript" src="omnigrid.js"></script>
+
+		<script type="text/javascript">
+
+		    function onGridSelect(evt)
+		    {
+		         var str = 'row: '+evt.row+' indices: '+evt.indices;
+		         str += ' id: '+evt.target.getDataByRow(evt.row).id;
+
+		         alert( str );
+		    }
+
+		    function gridButtonClick(button, grid)
+		    {
+		         alert(button);
+		    }
+
+		    var cmu = [
+		            {
+		               header: "ID",
+		               dataIndex: 'help_category_id',
+		               dataType:'number'
+		            },
+		            {
+		               header: "Parent ID",
+		               dataIndex: 'parent_category_id',
+		               dataType:'number',
+		               width:50
+		            },
+		            {
+		               header: "Name",
+		               dataIndex: 'name',
+		               dataType:'string',
+		               width:200
+		            }]; 
+
+		    window.addEvent("domready", function(){
+
+		        datagrid = new omniGrid('mygrid', {
+		            columnModel: cmu,
+		            buttons : [
+		              {name: 'Add', bclass: 'add', onclick : gridButtonClick},
+		              {name: 'Delete', bclass: 'delete', onclick : gridButtonClick},
+		              {separator: true},
+		              {name: 'Duplicate', bclass: 'duplicate', onclick : gridButtonClick}
+		            ],
+		            url:"http://www.omnisdata.com/omnigrid/data.php",
+		            perPageOptions: [10,20,50,100,200],
+		            perPage:10,
+		            page:1,
+		            pagination:true,
+		            serverSort:true,
+		            showHeader: true,
+		            alternaterows: true,
+		            showHeader:true,
+		            sortHeader:false,
+		            resizeColumns:true,
+		            multipleSelection:true,
+
+		            // uncomment this if you want accordion behavior for every row
+		            /*
+		            accordion:true,
+		            accordionRenderer:accordionFunction,
+		            autoSectionToggle:false,
+		            */
+
+		            width:600,
+		            height: 400
+		        });
+
+		        datagrid.addEvent('click', onGridSelect);
+
+		     });
+
+		</script>
+
+	</head>
+	<body>
+			<div class="container">
+				<h1>Omnigrid basic example</h1>
+				<div id="mygrid" ></div>
+			</div>
+	</body>
+</html>

@@ -67,6 +67,9 @@ Omnigrid will send following variables via POST method: \[page, perpage, \[sorto
 Usage
 -----
 
+Client side
+-----------
+
 ```html
 <link rel="stylesheet" media="screen" href="omnigrid.css" type="text/css" />
 <script type="text/javascript" src="mootools/mootools-1.2.js"></script>
@@ -150,6 +153,8 @@ Usage
 <div id="mygrid" ></div>
 ```
 
+Server Side
+-----------
 
 ```php
 // *********************** data.php ********************

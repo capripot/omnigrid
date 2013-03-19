@@ -1,6 +1,6 @@
 # omnigrid
 
-Enchanced table viewer written JS helped with [MooTools](http://mootools.net/).
+Enchanced table viewer written JS helped with [MooTools](http://mootools.net/) based on [Marko Šantić work](http://www.omnisdata.com/omnigrid/)
 
 [Mootools-Core](http://mootools.net/download) and [Drag module](http://mootools.net/more/f7005197184c1ad698fa1b435a9aecc0) dependent.
 

@@ -7,7 +7,6 @@ Enchanced table viewer written JS helped with [MooTools](http://mootools.net/).
 
 Check out the demo : http://capripot.info/omnigrid-demo/
 
-
 About
 -----
 

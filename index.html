@@ -15,6 +15,17 @@
 			padding: 1px;
 			height: 18px;
 		}
+		.omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol
+		{
+			top: 0;
+		}
+		.omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol input
+    {
+	    height: 17px;
+	    padding: 0;
+			width: 30px;
+		}
+
 		</style>
 		
 		<script type="text/javascript" src="mootools/mootools-core.js"></script>
@@ -39,20 +50,21 @@
 		    var cmu = [
 		            {
 		               header: "ID",
-		               dataIndex: 'help_category_id',
-		               dataType:'number'
-		            },
-		            {
-		               header: "Parent ID",
-		               dataIndex: 'parent_category_id',
+		               dataIndex: 'option_id',
 		               dataType:'number',
-		               width:50
+		               width: 50
 		            },
 		            {
-		               header: "Name",
-		               dataIndex: 'name',
+		               header: "Option Name",
+		               dataIndex: 'option_name',
 		               dataType:'string',
 		               width:200
+		            },
+		            {
+		               header: "Value",
+		               dataIndex: 'option_value',
+		               dataType:'string',
+		               width:300
 		            }]; 
 
 		    window.addEvent("domready", function(){
@@ -65,16 +77,16 @@
 		              {separator: true},
 		              {name: 'Duplicate', bclass: 'duplicate', onclick : gridButtonClick}
 		            ],
-		            url:"http://www.omnisdata.com/omnigrid/data.php",
-		            perPageOptions: [10,20,50,100,200],
+		            url:"data.php",
+		            perPageOptions: [10,20,50],
 		            perPage:10,
 		            page:1,
 		            pagination:true,
-		            serverSort:true,
+		            serverSort:false,
 		            showHeader: true,
 		            alternaterows: true,
 		            showHeader:true,
-		            sortHeader:false,
+		            sortHeader:true,
 		            resizeColumns:true,
 		            multipleSelection:true,
 
@@ -84,8 +96,6 @@
 		            accordionRenderer:accordionFunction,
 		            autoSectionToggle:false,
 		            */
-
-		            width:600,
 		            height: 400
 		        });
 
@@ -99,7 +109,7 @@
 	<body>
 			<div class="container">
 				<h1>Omnigrid basic example</h1>
-				<div id="mygrid" ></div>
+				<div class="row"><div id="mygrid" class="span12"></div></div>
 			</div>
 	</body>
 </html>

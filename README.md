@@ -1,4 +1,4 @@
-# omnigrid
+# Omnigrid for Mootools
 
 Enchanced table viewer written JS helped with [MooTools](http://mootools.net/) based on [Marko Šantić work](http://www.omnisdata.com/omnigrid/)
 

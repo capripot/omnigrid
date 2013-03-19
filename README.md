@@ -1,5 +1,4 @@
-omnigrid
-========
+# omnigrid
 
 Enchanced table viewer written JS helped with [MooTools](http://mootools.net/).
 
@@ -7,8 +6,7 @@ Enchanced table viewer written JS helped with [MooTools](http://mootools.net/).
 
 Check out the demo : http://capripot.info/omnigrid-demo/
 
-About
------
+## About
 
 The OmniGrid component is inspired by two similar components: FlexGrid jQuery and phatfusion:sortableTable and partly uses their source code. It was developed due to a lack of powerful DataGrid for Mootools library. The original author is Marko Šantić from Omnisdata company.
 
@@ -16,10 +14,9 @@ Omnigrid - Advanced DataGrid for Mootools by Omnisdata Ltd is licensed under a M
 
 Feel free to fork it to request new features.
 
-Documentation
--------------
+## Documentation
 
-*Methods*
+### Methods
 
  * constructor(el, options:Object):Object - el HTML element or string (element id), options (see Usage section)
  * refresh():Nothing
@@ -35,20 +32,20 @@ Documentation
  * gotoPage(page:Number):Nothing
  * setPerPage(perpage:Number):Nothing
 
-*Events*
+### Events
  * click - on row click
  * dblclick - on row double click
 
-*Database response from server-script to Omnigrid*
+### Database response from server-script to Omnigrid
 
 Response from dynamic scripts (php, asp, ...) that returns data from database must be in JSON format like this:
 {"page":"1","total":"101","data":[{object},{object},{object},{object},...]}
 
-*Database request from Omnigrid to server-script*
+### Database request from Omnigrid to server-script
 
 Omnigrid will send following variables via POST method: \[page, perpage, \[sorton,sortby] (only if serverSort option is true) ]
 
-*Column model*
+### Column model
 
 	var cmu = [
 	{
@@ -64,11 +61,9 @@ Omnigrid will send following variables via POST method: \[page, perpage, \[sorto
 	]
 								
 
-Usage
------
+## Usage
 
-Client side
------------
+### Client side
 
 ```html
 <link rel="stylesheet" media="screen" href="omnigrid.css" type="text/css" />
@@ -153,8 +148,7 @@ Client side
 <div id="mygrid" ></div>
 ```
 
-Server Side
------------
+### Server Side
 
 ```php
 // *********************** data.php ********************

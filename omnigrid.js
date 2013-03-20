@@ -554,7 +554,11 @@ var omniGrid = new Class({
 		}else
 		{
 			var url = (url != null) ? url : this.options.url;
-			var request = new Request.JSON({url:url, data:param});
+			var request = new Request.JSON({
+				url: url,
+				data: param,
+				onComplete: function(){ this.container.getElement('.bDiv').scrollTop = 0}.bind(this)
+			});
 
 			request.addEvent("complete", this.onLoadData.bind(this) ) ;
 

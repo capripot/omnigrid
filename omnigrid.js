@@ -1129,7 +1129,7 @@ var omniGrid = new Class({
 						// img.src = this.options.data[r][columnModel.dataIndex];
 						// td.appendChild(img);
 					}
-					else if (columnModel.dataType == "link") {
+					else if (columnModel.dataType == "link" && (this.options.data[r][columnModel.dataIndex] || this.options.data[r][columnModel.dataIndex].trim() != "")) {
 						var link = new Element('a', {
 							html: columnModel.header,
 							href: this.options.data[r][columnModel.dataIndex]

@@ -1087,60 +1087,61 @@ var omniGrid = new Class({
 					//if (columnModel.hidden)
 					//	continue;
 					
-					var div = new Element('div');
-					div.addClass('td');
-					div.setStyle('width', columnModel.width-6); // zbog paddinga u ff
+					var div = new Element('div')
+					.addClass('td')
+					.setStyle('width', columnModel.width-6)
+					.inject(li); // zbog paddinga u ff
 					//div.setStyle('overflow-x', 'hidden');
-						
-					li.appendChild(div);
 					
 					firstvisible = (!columnModel.hidden && firstvisible == -1) ? c : firstvisible;
 					
 					var toggleicon = "";
-					if (firstvisible==c && this.options.accordion && this.options.showtoggleicon)
-					{					
+					if (firstvisible==c && this.options.accordion && this.options.showtoggleicon){					
 						toggleicon = "<div class='toggleicon'></div>";
 					}
 					
-					if (columnModel.hidden) div.setStyle('display', 'none');					
+					if (columnModel.hidden)
+						div.setStyle('display', 'none');					
 					
-					if (columnModel.onMouseOver)
-					{
+					if (columnModel.onMouseOver){
 						div.onmouseover = this.onMouseOver.bind(this, {element:div, columnModel:columnModel, data:rowdata });												
 					}
 					
 					// title
-					if (columnModel.title) div.title = rowdata[columnModel.title];
+					if (columnModel.title)
+						div.title = rowdata[columnModel.title];
 
 					
-					if (columnModel.dataType == "checkbox")
-					{
-						
+					if (columnModel.dataType == "checkbox"){
 						var input = new Element('input', {type:"checkbox"});
-							
 						
 						if (columnModel.onChange)
-						{
 							input.onclick = this.onSelect.bind(this, {columnModel:columnModel, row:r, input:input});												
-						}
-						
+							
 						div.appendChild(input);
 						
 						var val = rowdata[columnModel.dataIndex];
-						if ( val == 1 || val=='t') {
+						if ( val == 1 || val=='t')
 							input.set('checked', true);
-						}
-						
-					}else if (columnModel.type == "image") {
-					/*	var img = new Element('img');
-						img.src = this.options.data[r][columnModel.dataIndex];
-						td.appendChild(img);*/
-						
-					}else if (columnModel.type == 'custom') {
+					}
+					else if (columnModel.dataType == "image") {
+						// var img = new Element('img');
+						// img.src = this.options.data[r][columnModel.dataIndex];
+						// td.appendChild(img);
+					}
+					else if (columnModel.dataType == "link") {
+						var link = new Element('a', {
+							html: columnModel.header,
+							href: this.options.data[r][columnModel.dataIndex]
+						}).inject(div);
+					}
+					else if (columnModel.dataType == 'custom') {
 						//columnModel.labelFunction(td, this.options.data[r], r);
-					}else if (columnModel.labelFunction != null) {
+					}
+					else if (columnModel.labelFunction != null) {
 							div.innerHTML = columnModel.labelFunction(rowdata, r, columnModel);
-					}else {
+					}
+					else {
 							var str = new String(rowdata[columnModel.dataIndex]); // mora biti string, jer ako dode 0 kao broj error
 
 							if (str == null || str == 'null' || str == 'undefined' || str == "" ) str = '&nbsp;';
@@ -1156,11 +1157,9 @@ var omniGrid = new Class({
 							
 							// *** reg. event to toggleicon ***
 							if (firstvisible==c && this.options.accordion && this.options.showtoggleicon)
-							{
 								div.getElement('.toggleicon').addEvent('click', this.toggleIconClick.bind(this));
-							}
+							
 					}
-					
 				} // for column
 				
 				// ***********************
@@ -1289,10 +1288,8 @@ var omniGrid = new Class({
 				this.visibleColumns++;
 			}
 			
-			var header = columnModel.header;
-			
-			if (header)
-				div.innerHTML = header;		
+			if (columnModel.header)
+				div.innerHTML = columnModel.header;		
 		}
 		hDivBox.setStyle('width', this.sumWidth+this.visibleColumns*2);
 		if (!this.options.showHeader)

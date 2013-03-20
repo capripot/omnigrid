@@ -51,7 +51,7 @@ Omnigrid will send following variables via POST method: \[page, perpage, \[sorto
 	{
 		header: "Column name",
 		dataIndex: 'database_attribut_name',
-		dataType:'number|string|date',
+		dataType:'number|string|date|link',
 		hidden:true|false,
 		width:Number // column default width
 	}, 

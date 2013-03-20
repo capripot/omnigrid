@@ -356,7 +356,7 @@ var omniGrid = new Class({
 			var selectedNum = this.selected.length;
 			var dontselect = false;
 			
-			if ( (!evt.control && !evt.shift) || !this.options.multipleSelection )
+			if ( (!evt.control && !evt.shift && !evt.meta) || !this.options.multipleSelection )
 			{
 				// ocisti stari selection
 				this.elements.each(function(el, i){ el.removeClass('selected') }, this);
@@ -366,7 +366,7 @@ var omniGrid = new Class({
 				this.selected = new Array();
 			}
 		
-			if ( evt.control )
+			if ( evt.control || evt.meta )
 			{
 				for (var i=0; i<selectedNum; i++)
 				{

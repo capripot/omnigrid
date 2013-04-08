@@ -69,7 +69,7 @@ Automatically defining an normal html table and data attributes
 These options are also available and all are optional :
 
  * data-type
- * data-index
+ * data-index (data-index is set up automatically based on the th content, but if you do internationalization, you should define it anyway)
  * data-content-index 
  * data-column-width
  * data-column-hidden
@@ -227,4 +227,35 @@ These options are also available and all are optional :
 	mysql_free_result($result);
           
 ?>
+```
+
+### Omnigrid + Bootstrap
+
+Maybe you want to use omnigrid with bootstrap
+It is quasi compliant
+I personally use these complementary CSS rules to make it full compliant
+
+``` css
+.omnigrid div.pDiv span{
+	line-height: 10px;
+}
+.omnigrid div.pDiv select
+{
+	padding: 1px;
+	height: 18px;
+}
+.omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol
+{
+	top: 0;
+}
+.omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol input
+{
+  height: 17px;
+  padding: 0;
+	width: 30px;
+}
+
+.omnigrid div.pDiv div.pDiv2{
+  width: auto;
+}
 ```

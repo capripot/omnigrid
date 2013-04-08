@@ -47,6 +47,10 @@ Omnigrid will send following variables via POST method: \[page, perpage, \[sorto
 
 ### Column model
 
+The column model can be set up by Javascript or in an automated way.
+
+By javascript, define an array as this :
+
 	var cmu = [
 	{
 		header: "Column name",
@@ -60,6 +64,41 @@ Omnigrid will send following variables via POST method: \[page, perpage, \[sorto
 	...
 	]
 								
+Automatically defining an normal html table and data attributes
+
+These options are also available and all are optional :
+
+ * data-type
+ * data-index
+ * data-content-index 
+ * data-column-width
+ * data-column-hidden
+ * data-column-editable
+
+<table class="table-striped span5 text-center omnigrid" id="stats_users_payments">
+	<thead>
+		<tr>
+			<th data-type="date" data-index="date">Date</th>
+			<th data-index="email" data-column-width="200">Email</th>
+			<th>Signups</th>
+			<th>Amount</th>
+			<th data-type="link">Ref</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%  @payments.each do |payment| %>
+			<tr>
+				<td><%= payment.created_at.strftime('%x') %></td>
+				<td><%= payment.email %></td>
+				<td><%= payment.signups %></td>
+				<td class="text-right"><%= payment.amount %></td>
+				<td><%= payment.ref %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+
 
 ## Usage
 

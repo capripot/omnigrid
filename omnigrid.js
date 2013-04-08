@@ -51,7 +51,10 @@ var omniGrid = new Class({
 		if (!this.container)
 			return;
 			
-		this.draw();
+		if(!this.options.columnModel)
+			this.setAutoColumnModel(); // draw called into this function
+		else
+			this.draw();
 		
 		this.reset();
 		
@@ -722,7 +725,7 @@ var omniGrid = new Class({
 		this.loader.setStyles({top:top+sizeGBlock.y/2-16, left: sizeGBlock.x/2});
 		*/
 		
-		this.loader.setStyles({top:this.options.height/2-16, left:  this.options.width/2});
+		this.loader.setStyles({top:this.container.getSize().y/2-16, left:  this.container.getSize().x/2});
 	},
 	
 	hideLoader: function(){
@@ -829,22 +832,29 @@ var omniGrid = new Class({
 	
 	// Automatsko odredivanje column modela ako nije zadan
 	setAutoColumnModel: function(){
-	
-		if ( !this.options.data ) return;
-			
-		var rowCount = this.options.data.length;
 		
-		if ( !(rowCount>0) )
-			return;
-			
-		this.options.columnModel = [];
+		// auto column model with data passed by the API
+		if ( this.options.data && this.options.data.length > 0){
+			this.options.columnModel = [];
 		
-		// uzmi schemu od prvog podatka
-		for ( var cn in this.options.data[0] )
-		{
-			var dataType = typeof(this.options.data[0][cn]) == "number" ? "number" : "string";
+			// uzmi schemu od prvog podatka
+			for ( var cn in this.options.data[0] )
+			{
+				var dataType = typeof(this.options.data[0][cn]) == "number" ? "number" : "string";
 			
-			this.options.columnModel.push({header:cn, dataIndex:cn, dataType: dataType, editable:true});
+				this.options.columnModel.push({header:cn, dataIndex:cn, dataType: dataType, editable:true});
+			}
+		}
+		else{
+			this.options.columnModel = [];
+			this.container.getElements('th').each(function(th){
+				dataType = ( th.get('data-type') ? th.get('data-type') : 'string' );
+				dataIndex = ( th.get('data-index') ? th.get('data-index') : th.get('html').trim().toLowerCase() );
+				if(dataType == 'link') dataIndex = dataIndex+'_link'
+				dataContentIndex = ( th.get('data-content-index') ? datath.get('data-content-index') : null );
+				columnWidth = (th.get('data-column-width') ? parseInt(datath.get('data-column-width')) : null );
+				this.options.columnModel.push({header: th.get('html'), dataIndex: dataIndex, dataType: dataType, dataContentIndex: dataContentIndex, width: columnWidth, editable: false});
+			}, this);
 		}
 		
 		this.fireEvent("autocolummodel", {target:this, columnModel:this.options.columnModel});
@@ -1135,9 +1145,16 @@ var omniGrid = new Class({
 					}
 					else if (columnModel.dataType == "link" && (this.options.data[r][columnModel.dataIndex] || this.options.data[r][columnModel.dataIndex].trim() != "")) {
 						var link = new Element('a', {
-							html: columnModel.header,
+							html: (columnModel.dataContentIndex ? this.options.data[r][columnModel.dataContentIndex] : columnModel.header),
 							href: this.options.data[r][columnModel.dataIndex]
 						}).inject(div);
+					}
+					else if (columnModel.dataType == "boolean") {
+						if(rowdata[columnModel.dataIndex] === true || rowdata[columnModel.dataIndex] == "true")
+							str = new String("√");
+						else
+							str = new String("&nbsp;");
+						div.innerHTML = str;
 					}
 					else if (columnModel.dataType == 'custom') {
 						//columnModel.labelFunction(td, this.options.data[r], r);
@@ -1193,7 +1210,7 @@ var omniGrid = new Class({
 	// ************************************************************************
 	// ************************* Main draw function ***************************
 	// ************************************************************************
-	draw: function(){	
+	draw: function(){		
 		this.removeAll(); // reset variables and only empty ulBody 
 		this.container.empty(); // empty all 
 		

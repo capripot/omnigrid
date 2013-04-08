@@ -854,7 +854,9 @@ var omniGrid = new Class({
         if(dataType == 'link') dataContentIndex = dataIndex
         if(dataType == 'link') dataIndex = dataIndex+'_link'
 				columnWidth = ( th.get('data-column-width') ? parseInt(th.get('data-column-width')) : null );
-				this.options.columnModel.push({header: th.get('html'), dataIndex: dataIndex, dataType: dataType, dataContentIndex: dataContentIndex, width: columnWidth, editable: false});
+        columnHidden = ( th.get('data-column-hidden') && th.get('data-column-hidden') == 'true' );
+        columnEditable = ( th.get('data-column-editable') && th.get('data-column-editable') == 'true' );
+				this.options.columnModel.push({header: th.get('html'), dataIndex: dataIndex, dataType: dataType, dataContentIndex: dataContentIndex, width: columnWidth, editable: columnEditable, hidden: columnHidden});
 			}, this);
 		}
 		

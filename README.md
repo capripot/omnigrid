@@ -81,22 +81,12 @@ These options are also available and all are optional :
 		<tr>
 			<th data-type="date" data-index="date">Date</th>
 			<th data-index="email" data-column-width="200">Email</th>
-			<th>Signups</th>
+			<th data-type="number">Number</th>
 			<th>Amount</th>
 			<th data-type="link">Ref</th>
 		</tr>
 	</thead>
-	<tbody>
-		<%  @payments.each do |payment| %>
-			<tr>
-				<td><%= payment.created_at.strftime('%x') %></td>
-				<td><%= payment.email %></td>
-				<td><%= payment.signups %></td>
-				<td class="text-right"><%= payment.amount %></td>
-				<td><%= payment.ref %></td>
-			</tr>
-		<% end %>
-	</tbody>
+  <!-- You can put here your fallback content in case of javascript is not active -->
 </table>
 ```
 

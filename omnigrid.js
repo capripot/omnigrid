@@ -850,9 +850,10 @@ var omniGrid = new Class({
 			this.container.getElements('th').each(function(th){
 				dataType = ( th.get('data-type') ? th.get('data-type') : 'string' );
 				dataIndex = ( th.get('data-index') ? th.get('data-index') : th.get('html').trim().toLowerCase() );
-				if(dataType == 'link') dataIndex = dataIndex+'_link'
-				dataContentIndex = ( th.get('data-content-index') ? datath.get('data-content-index') : null );
-				columnWidth = (th.get('data-column-width') ? parseInt(datath.get('data-column-width')) : null );
+				dataContentIndex = ( th.get('data-content-index') ? th.get('data-content-index') : null );
+        if(dataType == 'link') dataContentIndex = dataIndex
+        if(dataType == 'link') dataIndex = dataIndex+'_link'
+				columnWidth = ( th.get('data-column-width') ? parseInt(th.get('data-column-width')) : null );
 				this.options.columnModel.push({header: th.get('html'), dataIndex: dataIndex, dataType: dataType, dataContentIndex: dataContentIndex, width: columnWidth, editable: false});
 			}, this);
 		}
@@ -1145,7 +1146,7 @@ var omniGrid = new Class({
 					}
 					else if (columnModel.dataType == "link" && (this.options.data[r][columnModel.dataIndex] || this.options.data[r][columnModel.dataIndex].trim() != "")) {
 						var link = new Element('a', {
-							html: (columnModel.dataContentIndex ? this.options.data[r][columnModel.dataContentIndex] : columnModel.header),
+							html: (columnModel.dataContentIndex && this.options.data[r][columnModel.dataContentIndex] ? this.options.data[r][columnModel.dataContentIndex] : columnModel.header),
 							href: this.options.data[r][columnModel.dataIndex]
 						}).inject(div);
 					}
@@ -1217,7 +1218,10 @@ var omniGrid = new Class({
 		// ************************************************************************
 		// ************************* Common ***************************************
 		// ************************************************************************
-		var width = this.options.width - (Browser.ie ? 2 : 2 ); //-2 radi bordera
+    if(this.options.width)
+		  var width = this.options.width - (Browser.ie ? 2 : 2 ); //-2 radi bordera
+    else
+      var width = this.container.getWidth();
 		var columnCount = this.options.columnModel ? this.options.columnModel.length : 0;
 		
 		// ************************************************************************
@@ -1279,13 +1283,35 @@ var omniGrid = new Class({
 		
 		this.sumWidth = 0;
 		this.visibleColumns = 0; // razlikuje se od columnCount jer podaci za neke kolone su ocitani ali se ne prikazuju, npr. bitno kod li width
+    
+    //auto size of columns
+		this.autoColumnSizeNum = 0;
+		this.autoColumnSizeLess = 0;
+    
+    for (var c = 0; c < columnCount; c++) {
+			var columnModel = this.options.columnModel[c];
+      if(!columnModel.hidden){
+				this.visibleColumns++;
+        if(columnModel.width == null)
+          this.autoColumnSizeNum ++;
+        else
+          this.autoColumnSizeLess += columnModel.width;
+      }
+    }
+    
+    if(this.autoColumnSizeNum != 0)
+      this.autoColumnSizeWidth = (width - this.autoColumnSizeLess) / this.autoColumnSizeNum - 1
+    
 		for (var c = 0; c < columnCount; c++) {
 			var columnModel = this.options.columnModel[c];
 			
 			var div = new Element('div');
 			// ******************************************
 			// ****** default postavke columnModela *****
-			if (columnModel.width == null)  this.options.columnModel[c].width = 100; 
+			if (columnModel.width == null)
+        columnModel.width = this.autoColumnSizeWidth;
+      else
+        columnModel.width -= 1;
 			columnModel.sort = 'ASC'; 
 			// ******************************************
 
@@ -1306,7 +1332,6 @@ var omniGrid = new Class({
 				div.setStyle('display', 'none');
 			else{
 				this.sumWidth += columnModel.width;
-				this.visibleColumns++;
 			}
 			
 			if (columnModel.header)

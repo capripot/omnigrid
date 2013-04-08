@@ -75,6 +75,7 @@ These options are also available and all are optional :
  * data-column-hidden
  * data-column-editable
 
+```html
 <table class="table-striped span5 text-center omnigrid" id="stats_users_payments">
 	<thead>
 		<tr>
@@ -97,7 +98,7 @@ These options are also available and all are optional :
 		<% end %>
 	</tbody>
 </table>
-
+```
 
 
 ## Usage

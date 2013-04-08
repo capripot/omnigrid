@@ -231,28 +231,28 @@ These options are also available and all are optional :
 
 ### Omnigrid + Bootstrap
 
-Maybe you want to use omnigrid with bootstrap
-It is quasi compliant
-I personally use these complementary CSS rules to make it full compliant
+Maybe you want to use omnigrid with bootstrap.
+
+It is quasi compliant. I personally use these complementary CSS rules to make it full compliant :
 
 ``` css
 .omnigrid div.pDiv span{
-	line-height: 10px;
+  line-height: 10px;
 }
 .omnigrid div.pDiv select
 {
-	padding: 1px;
-	height: 18px;
+  padding: 1px;
+  height: 18px;
 }
 .omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol
 {
-	top: 0;
+  top: 0;
 }
 .omnigrid div.pDiv .pPageStat, .omnigrid div.pDiv .pcontrol input
 {
   height: 17px;
   padding: 0;
-	width: 30px;
+  width: 30px;
 }
 
 .omnigrid div.pDiv div.pDiv2{

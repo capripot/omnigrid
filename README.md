@@ -42,7 +42,7 @@ Here are the total list of options you can set both in javascript way of directl
  * url: null
  * pagination: false
  * page: 1
- * perPageOptions: [10 20 50 100 200]
+ * perPageOptions: [10,20,50,100,200]
  * perPage: 10
  * filterInput: false
  * dataProvider: null
@@ -52,7 +52,7 @@ Here are the total list of options you can set both in javascript way of directl
 
 ### Methods
 
- * constructor(el, options:Object):Object - el HTML element or string (element id), options (see Usage section)
+ * constructor(el, options:Object):Object - el HTML element or string (element id) or element collection, options (see Usage section)
  * refresh():Nothing
  * loadData(url:String):Nothing
  * setData(data:Array):Nothing

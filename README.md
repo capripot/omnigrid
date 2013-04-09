@@ -16,6 +16,40 @@ Feel free to fork it to request new features.
 
 ## Documentation
 
+### Options
+
+Here are the total list of options you can set both in javascript way of directly into the html (showHeader -> data-show-header) and defaults values  
+
+ * alternaterows: true	
+ * showHeader: true
+ * sortHeader: false
+ * resizeColumns: true
+ * selectable: true
+ * serverSort: true
+ * sortOn: null
+ * sortBy: 'ASC'
+ * filterHide: true
+ * filterHideCls: 'hide'
+ * filterSelectedCls: 'filter'
+ * multipleSelection: true
+ * editable: false
+ * editondblclick: false
+ * accordion: false
+ * accordionRenderer: null
+ * autoSectionToggle: true
+ * showtoggleicon: true
+ * openAccordionOnDblClick: false
+ * url: null
+ * pagination: false
+ * page: 1
+ * perPageOptions: [10 20 50 100 200]
+ * perPage: 10
+ * filterInput: false
+ * dataProvider: null
+ * height: null
+ * width: null
+
+
 ### Methods
 
  * constructor(el, options:Object):Object - el HTML element or string (element id), options (see Usage section)

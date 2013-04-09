@@ -48,6 +48,8 @@ var omniGrid = new Class({
 	},
   
   getHtmlOptions: function(options){
+    if(!options)
+      options = {}
     Object.each(this.getDefaultOptions(), function(item, key){
       var val = this.container.get('data-'+key.hyphenate())
       if(val){
@@ -60,17 +62,27 @@ var omniGrid = new Class({
         else if(/^\[([^\[\]]+)\]$/g.test(val))
           val = val.replace(/^\[([^\[\]]+)\]$/g, "$1").split(',');
         options[key] = val;
-        val = null;
       }
     }, this)
     return options;
   },
 	
 	initialize: function(container, options){
-		this.container = $(container);		
-		if (!this.container)
-			return;
-			
+    
+    if(typeof container == "object"){
+      if(!!(container && container.nodeType == 1)) //element
+        this.container = container;
+      else{//collection
+        Object.each(container, function(item, key, obj){
+          new omniGrid(item, options);
+        })
+        return;
+      }
+    }
+    else//id
+		  this.container = $(container);
+    if(!this.container)
+      return;
     options = this.getHtmlOptions(options);
 		this.setOptions(this.getDefaultOptions(), options);
 

@@ -10,47 +10,70 @@
 var omniGrid = new Class({
 	Implements: [Events,Options],
 				  
-	getOptions: function(){
+	getDefaultOptions: function(){
 		return {
 			alternaterows: true,	
-			showHeader:true,
-			sortHeader:false,
-			resizeColumns:true,
-			selectable:true,
-			serverSort:true,
+			showHeader: true,
+			sortHeader: false,
+			resizeColumns: true,
+			selectable: true,
+			serverSort: true,
 			sortOn: null,
 			sortBy: 'ASC',
 			filterHide: true,
 			filterHideCls: 'hide',
 			filterSelectedCls: 'filter',
-			multipleSelection:true,
-			editable:false,
-			editondblclick:false,
+			multipleSelection: true,
+			editable: false,
+			editondblclick: false,
 			// accordion
-			accordion:false,
-			accordionRenderer:null,
-			autoSectionToggle:true, // if true just one section can be open/visible
-			showtoggleicon:true,
-			openAccordionOnDblClick:false,
+			accordion: false,
+			accordionRenderer: null,
+			autoSectionToggle: true, // if true just one section can be open/visible
+			showtoggleicon: true,
+			openAccordionOnDblClick: false,
 			// pagination
-			url:null,
-			pagination:false,
-			page:1,
+			url: null,
+			pagination: false,
+			page: 1,
 			perPageOptions: [10, 20, 50, 100, 200],
-			perPage:10,
-			filterInput:false,
+			perPage: 10,
+			filterInput: false,
 			// dataProvider
-			dataProvider:null
+			dataProvider: null,
+      //size
+      height: null,
+      width: null
 		};
 	},
+  
+  getHtmlOptions: function(options){
+    Object.each(this.getDefaultOptions(), function(item, key){
+      var val = this.container.get('data-'+key.hyphenate())
+      if(val){
+        if(val == "true")
+          val = true;
+        else if(val == "false")
+          val = false;
+        else if(/^[0-9]+$/.test(val))
+          val = parseInt(val);
+        else if(/^\[([^\[\]]+)\]$/g.test(val))
+          val = val.replace(/^\[([^\[\]]+)\]$/g, "$1").split(',');
+        options[key] = val;
+        val = null;
+      }
+    }, this)
+    return options;
+  },
 	
 	initialize: function(container, options){
-		this.setOptions(this.getOptions(), options);
-		this.container = $(container);
-		
+		this.container = $(container);		
 		if (!this.container)
 			return;
 			
+    options = this.getHtmlOptions(options);
+		this.setOptions(this.getDefaultOptions(), options);
+
 		if(!this.options.columnModel)
 			this.setAutoColumnModel(); // draw called into this function
 		else
@@ -1218,7 +1241,7 @@ var omniGrid = new Class({
 		this.container.empty(); // empty all 
 		
 		// ************************************************************************
-		// ************************* Common ***************************************
+		// *********************** Common & container *****************************
 		// ************************************************************************
 		this.container.addClass('omnigrid');
 
@@ -1232,11 +1255,9 @@ var omniGrid = new Class({
     width -= 2; //inside borders
     
 		var columnCount = this.options.columnModel ? this.options.columnModel.length : 0;
-		
-		// ************************************************************************
-		// ************************* Container ************************************
-		// ************************************************************************
-		if (this.options.width)	this.container.setStyle('width', this.options.width);
+    
+		if (this.options.width)
+      this.container.setStyle('width', this.options.width);
 		
 		// ************************************************************************
 		// ************************* Toolbar **************************************

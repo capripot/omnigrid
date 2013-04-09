@@ -18,7 +18,8 @@ Feel free to fork it to request new features.
 
 ### Options
 
-Here are the total list of options you can set both in javascript way of directly into the html (showHeader -> data-show-header) and defaults values  
+Here are the total list of options you can set both in javascript way of directly into the html (showHeader -> data-show-header) and defaults values
+Options set in HTML overides thus set in JS 
 
  * alternaterows: true	
  * showHeader: true

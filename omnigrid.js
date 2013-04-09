@@ -1220,10 +1220,17 @@ var omniGrid = new Class({
 		// ************************************************************************
 		// ************************* Common ***************************************
 		// ************************************************************************
+		this.container.addClass('omnigrid');
+
     if(this.options.width)
-		  var width = this.options.width - (Browser.ie ? 2 : 2 ); //-2 radi bordera
+		  var width = this.options.width
     else
       var width = this.container.getWidth();
+    if(width == 0)
+      width = this.container.getParent().getWidth() - this.container.getStyle('margin-left').toInt() - this.container.getStyle('margin-right').toInt();
+    
+    width -= 2; //inside borders
+    
 		var columnCount = this.options.columnModel ? this.options.columnModel.length : 0;
 		
 		// ************************************************************************
@@ -1231,8 +1238,6 @@ var omniGrid = new Class({
 		// ************************************************************************
 		if (this.options.width)	this.container.setStyle('width', this.options.width);
 		
-		this.container.addClass('omnigrid');
-
 		// ************************************************************************
 		// ************************* Toolbar **************************************
 		// ************************************************************************

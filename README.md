@@ -99,7 +99,7 @@ By javascript, define an array as this :
 	...
 	]
 								
-Automatically defining an normal html table and data attributes
+Automatically defining an normal html table and data attributes (not working on IE)
 
 These options are also available and all are optional :
 
@@ -112,15 +112,15 @@ These options are also available and all are optional :
 
 ```html
 <table class="table-striped span5 text-center omnigrid" id="stats_users_payments">
-	<thead>
-		<tr>
-			<th data-type="date" data-index="date">Date</th>
-			<th data-index="email" data-column-width="200">Email</th>
-			<th data-type="number">Number</th>
-			<th>Amount</th>
-			<th data-type="link">Ref</th>
-		</tr>
-	</thead>
+  <thead>
+    <tr>
+      <th data-type="date" data-index="date">Date</th>
+      <th data-index="email" data-column-width="200">Email</th>
+      <th data-type="number">Number</th>
+      <th>Amount</th>
+      <th data-type="link">Ref</th>
+    </tr>
+  </thead>
   <!-- You can put here your fallback content in case of javascript is not active -->
 </table>
 ```

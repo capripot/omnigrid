@@ -563,7 +563,7 @@ var omniGrid = new Class({
 	{
 		if (!this.options.url && !this.options.dataProvider)
 			return;
-		
+    
 		var param = {};
 		
 		// ************* pagination *************************
@@ -589,15 +589,16 @@ var omniGrid = new Class({
 		{
 			// load data throw external class
 			this.options.dataProvider.loadData(param);
-		}else
-		{
-			var url = (url != null) ? url : this.options.url;
+		}
+    else{
+			if(url) this.options.url = url; //reset the url to the url passed if loadData is called with this parameter
+      var url = this.options.url;
 			var request = new Request.JSON({
 				url: url,
-				data: param,
-				onComplete: function(){ this.container.getElement('.bDiv').scrollTop = 0}.bind(this)
+				data: param
 			});
 
+      request.addEvent("complete", function(){ this.container.getElement('.bDiv').scrollTop = 0}.bind(this) ) ;
 			request.addEvent("complete", this.onLoadData.bind(this) ) ;
 
 			request.get();
@@ -1340,7 +1341,7 @@ var omniGrid = new Class({
     }
     
     if(this.autoColumnSizeNum != 0)
-      this.autoColumnSizeWidth = (width - this.autoColumnSizeLess) / this.autoColumnSizeNum - 1
+      this.autoColumnSizeWidth = (width - (this.options.height ? (Browser.Platform.mac ? 16 : 17) : 0) - this.autoColumnSizeLess) / this.autoColumnSizeNum - 1 //16 because of the scrolling
     
 		for (var c = 0; c < columnCount; c++) {
 			var columnModel = this.options.columnModel[c];
@@ -1366,7 +1367,6 @@ var omniGrid = new Class({
 			div.store('dataType', columnModel.dataType);
 			div.addClass('th');
 			div.setStyle('width', columnModel.width-(Browser.ie ? 6 : 6 ));
-			hDivBox.appendChild(div);
 	
 			if (columnModel.hidden) 
 				div.setStyle('display', 'none');
@@ -1375,7 +1375,9 @@ var omniGrid = new Class({
 			}
 			
 			if (columnModel.header)
-				div.innerHTML = columnModel.header;		
+				div.set('html', columnModel.header);
+
+  		hDivBox.appendChild(div);
 		}
 		hDivBox.setStyle('width', this.sumWidth+this.visibleColumns*2);
 		if (!this.options.showHeader)
@@ -1442,6 +1444,9 @@ var omniGrid = new Class({
 		if (this.options.width)
 			bDiv.setStyle('width', width);
 
+    if(this.options.height)
+      bDiv.setStyles({'overflow-x':'auto', 'overflow-y':'scroll'});
+
 		bDiv.setStyle('height', bodyHeight);	
 		this.container.appendChild(bDiv);
 
@@ -1453,8 +1458,7 @@ var omniGrid = new Class({
 		this.ulBody.setStyle('width', this.sumWidth+this.visibleColumns*(Browser.ie ? 1 : 1 )); // da se ne vidi visak, ul je overflow hidden
 		bDiv.appendChild(this.ulBody);
 
-
-		if (this.options.pagination && !this.container.getElement('div.pDiv') )
+    if (this.options.pagination && !this.container.getElement('div.pDiv') )
 		{
 			var pDiv = new Element('div')
 			.addClass('pDiv')
@@ -1463,8 +1467,7 @@ var omniGrid = new Class({
 			.inject(this.container);
 			
 			var pDiv2 = new Element('div')
-			.addClass('pDiv2')
-			.inject(pDiv);
+			.addClass('pDiv2');
 			
 			var h = '<div class="pGroup"><select class="rp input-mini" name="rp">';
 			
@@ -1493,6 +1496,7 @@ var omniGrid = new Class({
 			if (this.options.filterInput) h += '<div class="btnseparator"></div><div class="pGroup"><span class="pcontrol"><input class="cfilter" type="text" value="" style="" /><span></div>';
 			
 			pDiv2.innerHTML = h;
+			pDiv2.inject(pDiv);
 
 			// set this.options.perPage value from this.options.perPageOptions array
 			var rpObj = pDiv2.getElement('.rp');
